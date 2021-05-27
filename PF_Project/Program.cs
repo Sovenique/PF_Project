@@ -1,12 +1,12 @@
 ﻿using System;
 
-namespace PF_Project
+namespace PF_Project_CORE
 {
     class Program
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            Tests.Scenario_1.execute();
         }
     }
 }
