@@ -1,4 +1,5 @@
 ﻿using PF_Project_CORE.Database;
+using PF_Project_CORE.Entities;
 using PF_Project_CORE.Interfaces;
 using PF_Project_CORE.Options;
 using PF_Project_CORE.Services;
@@ -12,8 +13,6 @@ namespace PF_Project_CORE.Tests
 {
     public static class Scenario_1
     {
-
-
 
         public static bool test_create_memeber()
         {
@@ -95,16 +94,77 @@ namespace PF_Project_CORE.Tests
         }
 
 
-        public static bool execute()
+        public static bool test_create_projects()
         {
-            Console.WriteLine("> Running Scenario [1]...");
-            test_delete_members();
-            test_create_memeber();
-            test_read_members();
 
+            IApplicationDbContext db = new ApplicationDbContext();
+            ServiceProject serviceProject = new(db);
+            ServiceMember serviceMember = new(db);
+
+            // READ ALL MEMBERS
+            List<OptionMember> optionMembers = new();
+            
+            optionMembers = serviceMember.ReadAllMembers();
+            //var member = db.Students.Where(x => x.F_Name.ToLower() == "stu2").ToList();
+            var member = db.Members.ToList();
+
+            Console.WriteLine(member);
+            member.ForEach(mem => Console.WriteLine($"member [{mem.Id}]"));
+
+            List<OptionsProject> optionsProjects = new()
+            {
+
+                new OptionsProject
+                {
+                    Title = "Computer Store",
+                    Description = "A new type of store for computer parts",
+                    CreatedDate = DateTime.Now,
+                    AmountGathered = 0,
+                    TargetAmount = 5000,
+                    Creator = member[0]
+                },
+            };
+
+            optionsProjects.ForEach(project => serviceProject.CreateProject(project));
+            
+            return true;
+        }
+
+        public static bool test_delete_projects()
+        {
+            IApplicationDbContext db = new ApplicationDbContext();
+            ServiceProject serviceProject = new(db);
+
+            List<OptionsProject> optionProject = new();
+
+            // READ ALL MEMBERS
+            optionProject = serviceProject.GetAllProjects();
+
+            // DELETE ALL MEMBERS
+            optionProject.ForEach(project =>
+                serviceProject.DeleteProject(project.Id)
+            );
 
             return true;
         }
+
+        public static bool execute()
+        {
+            Console.WriteLine("> Running Scenario [1]...");
+            Console.WriteLine("> Running Scenario [1]... delete all projects");
+            test_delete_projects();
+            Console.WriteLine("> Running Scenario [1]... delete all members");
+            test_delete_members();
+            Console.WriteLine("> Running Scenario [1]... create members");
+            test_create_memeber();
+            Console.WriteLine("> Running Scenario [1]... read all members");
+            test_read_members();
+            Console.WriteLine("> Running Scenario [1]... create a project for member with ID = [0]");
+            test_create_projects();
+
+            return true;
+        }
+
 
     }
 }
