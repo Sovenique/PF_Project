@@ -11,15 +11,18 @@ namespace PF_Project_CORE.Options
     {
         public int Id { get; set; }
         public Package Package { get; set; }
+        public int? PackageId { get; set; }
         public Member Member { get; set; }
-
+        public int? MemberId { get; set; }
         public OptionPayment() { }
 
         public OptionPayment(Payment Payment) 
         {
             Id = Payment.Id;
             Package = Payment.Package;
+            PackageId = Payment.PackageId;
             Member = Payment.Member;
+            MemberId = Payment.MemberId;
         }
     }
 }

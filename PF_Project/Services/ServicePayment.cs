@@ -22,10 +22,14 @@ namespace PF_Project_CORE.Services
         // --------------------------------------------------------
         public OptionPayment CreatePayment(OptionPayment optionPayment,OptionMember optionMember,OptionPackage optionPackage)
         {
+
+            var member = _dbContext.Members.Where(mem => mem.Id == optionMember.Id).ToList();
+            var package = _dbContext.Packages.Where(pack => pack.Id == optionPackage.Id).ToList();
+
             Payment payment = new()
             {
-                Package = optionPayment.Package,
-                Member = optionPayment.Member
+                Package = package[0],
+                Member = member[0]
             };
 
             _dbContext.Payments.Add(payment);

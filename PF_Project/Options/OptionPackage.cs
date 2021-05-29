@@ -14,6 +14,7 @@ namespace PF_Project_CORE.Options
         public string Description { set; get; }
         public decimal Value { get; set; }
         public Project Project { get; set; }
+        public int ProjectId { get; set; }
 
         public OptionPackage() { }
         public OptionPackage(Package package )
@@ -23,6 +24,7 @@ namespace PF_Project_CORE.Options
             Description = package.Description;
             Value = package.Value;
             Project = package.Project;
+            ProjectId = package.ProjectId;
         }
     }
 }

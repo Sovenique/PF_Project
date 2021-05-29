@@ -37,7 +37,7 @@ namespace PF_Project_CORE.Migrations
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     AmountGathered = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     TargetAmount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    CreatorId = table.Column<int>(type: "int", nullable: true)
+                    CreatorId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -47,7 +47,7 @@ namespace PF_Project_CORE.Migrations
                         column: x => x.CreatorId,
                         principalTable: "Members",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -59,7 +59,7 @@ namespace PF_Project_CORE.Migrations
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Value = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    ProjectId = table.Column<int>(type: "int", nullable: true)
+                    ProjectId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -69,7 +69,7 @@ namespace PF_Project_CORE.Migrations
                         column: x => x.ProjectId,
                         principalTable: "Projects",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(

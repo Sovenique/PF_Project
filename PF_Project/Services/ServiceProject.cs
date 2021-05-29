@@ -23,7 +23,7 @@ namespace PF_Project_CORE.Services
         public OptionProject CreateProject(OptionProject optionProject, OptionMember optionMember)
         {
             // FIND THE MEMBER CREATOR (BY EMAIL)
-            var member = _dbContext.Members.Where(mem => mem.Email == optionMember.Email).ToList();
+            var member = _dbContext.Members.Where(mem => mem.Id == optionMember.Id).ToList();
 
             // CREATE THE MEMBER OBJECT
             Project project = new()
@@ -33,7 +33,8 @@ namespace PF_Project_CORE.Services
                 CreatedDate = DateTime.Now,
                 AmountGathered = 0,
                 TargetAmount = optionProject.TargetAmount,
-                Creator = member[0]
+                Creator = member[0],
+                CreatorId = member[0].Id
             };
 
             _dbContext.Projects.Add(project);

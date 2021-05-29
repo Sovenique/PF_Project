@@ -13,5 +13,6 @@ namespace PF_Project_CORE.Entities
         public string Description { set; get; }
         public decimal Value { get; set; }
         public Project Project { get; set; }
+        public int ProjectId { get; set; }
     }
 }

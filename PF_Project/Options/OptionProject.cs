@@ -16,7 +16,7 @@ namespace PF_Project_CORE.Options
         public decimal AmountGathered { get; set; }
         public decimal TargetAmount { get; set; }
         public Member Creator { get; set; }
-
+        public int CreatorId { get; set; }
 
         public OptionProject() { }
         public OptionProject(Project project)
@@ -30,6 +30,7 @@ namespace PF_Project_CORE.Options
                 AmountGathered = project.AmountGathered;
                 TargetAmount = project.TargetAmount;
                 Creator = project.Creator;
+                CreatorId = project.CreatorId;
             }
         }
     }

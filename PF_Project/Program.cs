@@ -6,7 +6,13 @@ namespace PF_Project_CORE
     {
         static void Main(string[] args)
         {
-            Tests.Scenario_1.execute();
+            // SCENARIO 1
+            // ---------------------------
+             Tests.Scenario_1.execute();
+
+            // SCENARIO 2
+            // ---------------------------
+            // Tests.Scenario_2.test_get_projects();
         }
     }
 }

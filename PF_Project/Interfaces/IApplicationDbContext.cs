@@ -15,5 +15,6 @@ namespace PF_Project_CORE.Interfaces
         public DbSet<Package> Packages { get; set; }
         public DbSet<Payment> Payments { get; set; }
         public int SaveChanges();
+        public Task<int> SaveChangesAsync();
     }
 }

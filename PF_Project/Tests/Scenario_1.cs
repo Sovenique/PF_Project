@@ -133,6 +133,21 @@ namespace PF_Project_CORE.Tests
             return true;
         }
 
+        public static bool test_get_projects()
+        {
+            IApplicationDbContext db = new ApplicationDbContext();
+            ServiceProject serviceProject = new(db);
+            List<OptionProject> optionProjects = new();
+
+            optionProjects = serviceProject.GetAllProjects();
+
+            optionProjects.ForEach(project =>
+                Console.WriteLine($"{project.Id} , {project.Title} , {project.CreatorId}")
+            );
+
+            return true;
+        }
+
         public static bool test_delete_projects()
         {
             IApplicationDbContext db = new ApplicationDbContext();
@@ -164,6 +179,8 @@ namespace PF_Project_CORE.Tests
             test_read_members();
             Console.WriteLine("> Running Scenario [1]... create a project for member with ID = [0]");
             test_create_projects();
+            Console.WriteLine("> Running Scenario [1]... read all projects");
+            test_get_projects();
 
             return true;
         }

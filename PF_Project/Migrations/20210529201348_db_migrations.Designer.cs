@@ -10,7 +10,7 @@ using PF_Project_CORE.Database;
 namespace PF_Project_CORE.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210528214643_db_migrations")]
+    [Migration("20210529201348_db_migrations")]
     partial class db_migrations
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -64,7 +64,7 @@ namespace PF_Project_CORE.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("ProjectId")
+                    b.Property<int>("ProjectId")
                         .HasColumnType("int");
 
                     b.Property<string>("Title")
@@ -115,7 +115,7 @@ namespace PF_Project_CORE.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("CreatorId")
+                    b.Property<int>("CreatorId")
                         .HasColumnType("int");
 
                     b.Property<string>("Description")
@@ -138,7 +138,9 @@ namespace PF_Project_CORE.Migrations
                 {
                     b.HasOne("PF_Project_CORE.Entities.Project", "Project")
                         .WithMany("Packages")
-                        .HasForeignKey("ProjectId");
+                        .HasForeignKey("ProjectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Project");
                 });
@@ -162,7 +164,9 @@ namespace PF_Project_CORE.Migrations
                 {
                     b.HasOne("PF_Project_CORE.Entities.Member", "Creator")
                         .WithMany("Projects")
-                        .HasForeignKey("CreatorId");
+                        .HasForeignKey("CreatorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Creator");
                 });
