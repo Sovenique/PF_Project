@@ -52,6 +52,54 @@ namespace PF_Project_CORE.Migrations
                     b.ToTable("Members");
                 });
 
+            modelBuilder.Entity("PF_Project_CORE.Entities.Package", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("ProjectId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("Value")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProjectId");
+
+                    b.ToTable("Packages");
+                });
+
+            modelBuilder.Entity("PF_Project_CORE.Entities.Payment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("MemberId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("PackageId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MemberId");
+
+                    b.HasIndex("PackageId");
+
+                    b.ToTable("Payments");
+                });
+
             modelBuilder.Entity("PF_Project_CORE.Entities.Project", b =>
                 {
                     b.Property<int>("Id")
@@ -84,6 +132,30 @@ namespace PF_Project_CORE.Migrations
                     b.ToTable("Projects");
                 });
 
+            modelBuilder.Entity("PF_Project_CORE.Entities.Package", b =>
+                {
+                    b.HasOne("PF_Project_CORE.Entities.Project", "Project")
+                        .WithMany("Packages")
+                        .HasForeignKey("ProjectId");
+
+                    b.Navigation("Project");
+                });
+
+            modelBuilder.Entity("PF_Project_CORE.Entities.Payment", b =>
+                {
+                    b.HasOne("PF_Project_CORE.Entities.Member", "Member")
+                        .WithMany()
+                        .HasForeignKey("MemberId");
+
+                    b.HasOne("PF_Project_CORE.Entities.Package", "Package")
+                        .WithMany()
+                        .HasForeignKey("PackageId");
+
+                    b.Navigation("Member");
+
+                    b.Navigation("Package");
+                });
+
             modelBuilder.Entity("PF_Project_CORE.Entities.Project", b =>
                 {
                     b.HasOne("PF_Project_CORE.Entities.Member", "Creator")
@@ -96,6 +168,11 @@ namespace PF_Project_CORE.Migrations
             modelBuilder.Entity("PF_Project_CORE.Entities.Member", b =>
                 {
                     b.Navigation("Projects");
+                });
+
+            modelBuilder.Entity("PF_Project_CORE.Entities.Project", b =>
+                {
+                    b.Navigation("Packages");
                 });
 #pragma warning restore 612, 618
         }

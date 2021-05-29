@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace PF_Project_CORE.Options
 {
-    public class OptionsProject
+    public class OptionProject
     {
         public int Id { get; set; }
         public string Title { get; set; }
@@ -18,11 +18,12 @@ namespace PF_Project_CORE.Options
         public Member Creator { get; set; }
 
 
-        public OptionsProject() { }
-        public OptionsProject(Project project)
+        public OptionProject() { }
+        public OptionProject(Project project)
         {
             if (project != null)
             {
+                Id = project.Id;
                 Title = project.Title;
                 Description = project.Description;
                 CreatedDate = project.CreatedDate;

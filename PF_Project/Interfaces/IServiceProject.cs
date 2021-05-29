@@ -10,12 +10,13 @@ namespace PF_Project_CORE.Interfaces
     public interface IServiceProject
     {
         // CREATE
-        public OptionsProject CreateProject(OptionsProject optionProjrct);
-        // READ
-        public List<OptionsProject> GetAllProjects();
-        public OptionsProject GetProjectById(int Id);
+        public OptionProject CreateProject(OptionProject optionProjrct, OptionMember optionMember);
+        // READ ALL
+        public List<OptionProject> GetAllProjects();
+        // READ BY ID
+        public OptionProject GetProjectById(int Id);
         // UPDATE
-        public OptionsProject UpdateProject(OptionsProject optionsProject, int Id);
+        public OptionProject UpdateProject(OptionProject optionsProject, int Id);
         // DELETE
         public bool DeleteProject(int Id);
     }

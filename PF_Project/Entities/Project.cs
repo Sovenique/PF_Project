@@ -17,5 +17,6 @@ namespace PF_Project_CORE.Entities
 
         // <Foreign Key> : Link to <Member> entity
         public Member Creator { get; set; }
+        public List<Package> Packages { get; set; }
     }
 }

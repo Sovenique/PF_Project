@@ -12,7 +12,7 @@ namespace PF_Project_CORE.Interfaces
         // CREATE
         public OptionMember CreateMember(OptionMember optionMember);
         // READ
-        public List<OptionMember> ReadAllMembers();
+        public List<OptionMember> GetAllMembers();
         public OptionMember GetMemberById(int Id);
         // UPDATE
         public OptionMember UpdateMember(OptionMember optionMember, int Id);

@@ -66,9 +66,9 @@ namespace PF_Project_CORE.Tests
 
             List<OptionMember> optionMembers = new();
 
-            optionMembers = serviceMember.ReadAllMembers();
+            optionMembers = serviceMember.GetAllMembers();
             optionMembers.ForEach(member => 
-                Console.WriteLine($"Name:{member.FirstName} , Email:{member.Email}")
+                Console.WriteLine($"\tName:{member.FirstName} , Email:{member.Email}")
             );
 
             return true;
@@ -83,7 +83,7 @@ namespace PF_Project_CORE.Tests
             List<OptionMember> optionMembers = new();
             
             // READ ALL MEMBERS
-            optionMembers = serviceMember.ReadAllMembers();
+            optionMembers = serviceMember.GetAllMembers();
 
             // DELETE ALL MEMBERS
             optionMembers.ForEach(member => 
@@ -104,28 +104,31 @@ namespace PF_Project_CORE.Tests
             // READ ALL MEMBERS
             List<OptionMember> optionMembers = new();
             
-            optionMembers = serviceMember.ReadAllMembers();
-            //var member = db.Students.Where(x => x.F_Name.ToLower() == "stu2").ToList();
-            var member = db.Members.ToList();
+            optionMembers = serviceMember.GetAllMembers();
 
-            Console.WriteLine(member);
-            member.ForEach(mem => Console.WriteLine($"member [{mem.Id}]"));
 
-            List<OptionsProject> optionsProjects = new()
+            List<OptionProject> optionsProjects = new()
             {
 
-                new OptionsProject
+                new OptionProject
                 {
                     Title = "Computer Store",
                     Description = "A new type of store for computer parts",
                     CreatedDate = DateTime.Now,
                     AmountGathered = 0,
-                    TargetAmount = 5000,
-                    Creator = member[0]
+                    TargetAmount = 5000
                 },
+                new OptionProject
+                {
+                    Title = "WebSite Builder",
+                    Description = "Build your own website easy and fast",
+                    CreatedDate = DateTime.Now,
+                    AmountGathered = 0,
+                    TargetAmount = 12000
+                }
             };
 
-            optionsProjects.ForEach(project => serviceProject.CreateProject(project));
+            optionsProjects.ForEach(project => serviceProject.CreateProject(project,optionMembers[0]));
             
             return true;
         }
@@ -135,7 +138,7 @@ namespace PF_Project_CORE.Tests
             IApplicationDbContext db = new ApplicationDbContext();
             ServiceProject serviceProject = new(db);
 
-            List<OptionsProject> optionProject = new();
+            List<OptionProject> optionProject = new();
 
             // READ ALL MEMBERS
             optionProject = serviceProject.GetAllProjects();

@@ -13,6 +13,9 @@ namespace PF_Project_CORE.Database
     {
         public DbSet<Member> Members { get; set; }
         public DbSet<Project> Projects { get; set; }
+        public DbSet<Package> Packages { get; set; }
+        public DbSet<Payment> Payments { get; set; }
+
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -22,7 +25,7 @@ namespace PF_Project_CORE.Database
             {
                 // Run Migration Commands
                 // -------------------------
-                // - add-migration fundraisingAppCore
+                // - add-migration db_migrations
                 // - update-database
                 optionsBuilder.UseSqlServer("Data Source = localhost; Initial Catalog= Fundraising.App; Integrated Security = true");
 

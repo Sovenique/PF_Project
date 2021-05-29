@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace PF_Project_CORE.Services
 {
-    public class ServiceMember
+    public class ServiceMember : IServiceMember
     {
         private readonly IApplicationDbContext _dbContext;
 
@@ -57,7 +57,7 @@ namespace PF_Project_CORE.Services
 
         // READ / ALL
         // --------------------------------------------------------
-        public List<OptionMember> ReadAllMembers()
+        public List<OptionMember> GetAllMembers()
         {
             List<Member> members = _dbContext.Members.ToList();
             List<OptionMember> optionMembers = new();

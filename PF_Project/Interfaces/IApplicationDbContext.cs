@@ -12,6 +12,8 @@ namespace PF_Project_CORE.Interfaces
     {
         public DbSet<Member> Members { get; set; }
         public DbSet<Project> Projects { get; set; }
+        public DbSet<Package> Packages { get; set; }
+        public DbSet<Payment> Payments { get; set; }
         public int SaveChanges();
     }
 }

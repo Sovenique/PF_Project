@@ -9,19 +9,23 @@ using System.Threading.Tasks;
 
 namespace PF_Project_CORE.Services
 {
-    public class ServiceProject
+    public class ServiceProject : IServiceProject
     {
-        private readonly IApplicationDbContext dbContext;
+        private readonly IApplicationDbContext _dbContext;
 
-        public ServiceProject(IApplicationDbContext _dbContext)
+        public ServiceProject(IApplicationDbContext dbContext)
         {
-            dbContext = _dbContext;
+            _dbContext = dbContext;
         }
 
         // CREATE
         // --------------------------------------------------------
-        public OptionsProject CreateProject(OptionsProject optionProject)
+        public OptionProject CreateProject(OptionProject optionProject, OptionMember optionMember)
         {
+            // FIND THE MEMBER CREATOR (BY EMAIL)
+            var member = _dbContext.Members.Where(mem => mem.Email == optionMember.Email).ToList();
+
+            // CREATE THE MEMBER OBJECT
             Project project = new()
             {
                 Title = optionProject.Title,
@@ -29,53 +33,54 @@ namespace PF_Project_CORE.Services
                 CreatedDate = DateTime.Now,
                 AmountGathered = 0,
                 TargetAmount = optionProject.TargetAmount,
-                Creator = optionProject.Creator
+                Creator = member[0]
             };
-            
-            dbContext.Projects.Add(project);
-            dbContext.SaveChanges();
 
-            return new OptionsProject(project);
+            _dbContext.Projects.Add(project);
+            _dbContext.SaveChanges();
+
+            return new OptionProject(project);
         }
 
         // DELETE
         // --------------------------------------------------------
         public bool DeleteProject(int Id)
         {
-            Project dbContextProject = dbContext.Projects.Find(Id);
+            Project dbContextProject = _dbContext.Projects.Find(Id);
             if (dbContextProject == null) return false;
-            dbContext.Projects.Remove(dbContextProject);
+            _dbContext.Projects.Remove(dbContextProject);
+            _dbContext.SaveChanges();
             return true;
 
         }
 
         // READ / ALL
         // --------------------------------------------------------
-        public List<OptionsProject> GetAllProjects()
+        public List<OptionProject> GetAllProjects()
         {
-            List<Project> projects = dbContext.Projects.ToList();
-            List<OptionsProject> optionsProject = new();
-            projects.ForEach(project => optionsProject.Add(new OptionsProject(project)));
+            List<Project> projects = _dbContext.Projects.ToList();
+            List<OptionProject> optionsProject = new();
+            projects.ForEach(project => optionsProject.Add(new OptionProject(project)));
             return optionsProject;
         }
 
         // READ / BY ID
         // --------------------------------------------------------
-        public OptionsProject GetProjectById(int Id)
+        public OptionProject GetProjectById(int Id)
         {
-            Project project = dbContext.Projects.Find(Id);
+            Project project = _dbContext.Projects.Find(Id);
             if (project == null)
             {
                 return null;
             }
-            return new OptionsProject(project);
+            return new OptionProject(project);
         }
 
         // UPDATE
         // --------------------------------------------------------
-        public OptionsProject UpdateProject(OptionsProject optionsProject, int Id)
+        public OptionProject UpdateProject(OptionProject optionsProject, int Id)
         {
-            Project dbContextProject = dbContext.Projects.Find(Id);
+            Project dbContextProject = _dbContext.Projects.Find(Id);
             if (dbContextProject == null) return null;
 
             dbContextProject.Title = optionsProject.Title;
@@ -85,8 +90,8 @@ namespace PF_Project_CORE.Services
             dbContextProject.Creator = optionsProject.Creator;
 
 
-            dbContext.SaveChanges();
-            return new OptionsProject(dbContextProject);
+            _dbContext.SaveChanges();
+            return new OptionProject(dbContextProject);
 
         }
     }
