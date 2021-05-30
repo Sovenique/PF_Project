@@ -1,12 +1,10 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Identity;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PF_Project_CORE.Entities
 {
-    public class Member
+    public class Member : IdentityUser
     {
         public int Id { get; set; }
         public string FirstName { get; set; }
@@ -17,5 +15,6 @@ namespace PF_Project_CORE.Entities
         public DateTime Birthday { get; set; }
         public DateTime CreatedDate { get; set; }
         public List<Project> Projects { get; set; }
+        public List<Payment> Payments { get; set; }
     }
 }

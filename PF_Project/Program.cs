@@ -8,7 +8,7 @@ namespace PF_Project_CORE
         {
             // SCENARIO 1
             // ---------------------------
-             Tests.Scenario_1.execute();
+            //Tests.Scenario_1.execute();
 
             // SCENARIO 2
             // ---------------------------

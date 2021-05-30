@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using PF_Project_CORE.Entities;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace PF_Project_CORE.Interfaces
 {
-    public interface IApplicationDbContext
+    public interface IApplicationDbContext 
     {
         public DbSet<Member> Members { get; set; }
         public DbSet<Project> Projects { get; set; }

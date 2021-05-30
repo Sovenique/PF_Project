@@ -20,6 +20,8 @@ namespace PF_Project_WEB.Controllers
             _context = context;
         }
 
+
+
         // GET: Projects
         public async Task<IActionResult> Index()
         {

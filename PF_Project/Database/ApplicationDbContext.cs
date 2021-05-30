@@ -1,35 +1,30 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using PF_Project_CORE.Entities;
 using PF_Project_CORE.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Reflection;
 using System.Threading.Tasks;
 
 namespace PF_Project_CORE.Database
 {
-    public class ApplicationDbContext : DbContext, IApplicationDbContext
+    public class ApplicationDbContext : IdentityDbContext<Member>, IApplicationDbContext
     {
         public DbSet<Member> Members { get; set; }
         public DbSet<Project> Projects { get; set; }
         public DbSet<Package> Packages { get; set; }
         public DbSet<Payment> Payments { get; set; }
 
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+        : base(options)
         {
-            var LOCAL_DB = true;
+        }
 
-            if (LOCAL_DB)
-            {
-                // Run Migration Commands
-                // -------------------------
-                // - add-migration db_migrations
-                // - update-database
-                optionsBuilder.UseSqlServer("Data Source = localhost; Initial Catalog= Fundraising.App; Integrated Security = true");
 
-            }
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+
+            base.OnModelCreating(builder);
         }
 
         public override int SaveChanges()
