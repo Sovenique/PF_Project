@@ -29,14 +29,10 @@ namespace PF_Project_WEB.Controllers
             }
 
 
-            public IActionResult GetUserId()
-            {
-                var memberId = _userManager.GetUserId(HttpContext.User);
-                return View();
-            }
+        // USARE AUTO GIA ID _userManager.GetUserId(HttpContext.User);
 
-            // GET: Packages
-            public async Task<IActionResult> Index()
+        // GET: Packages
+        public async Task<IActionResult> Index()
         {
             var applicationDbContext = _context.Packages.Include(p => p.Project);
             return View(await applicationDbContext.ToListAsync());

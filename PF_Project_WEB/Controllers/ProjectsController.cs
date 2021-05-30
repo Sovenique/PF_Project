@@ -26,12 +26,8 @@ namespace PF_Project_WEB.Controllers
             _signInManager = signInManager;
         }
 
-     
-        public IActionResult GetUserId()
-        {
-            var memberId = _userManager.GetUserId(HttpContext.User);
-            return View();
-        }
+
+        // USARE AUTO GIA ID _userManager.GetUserId(HttpContext.User);
 
 
         // GET: Projects
