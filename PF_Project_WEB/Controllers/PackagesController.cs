@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -13,15 +14,29 @@ namespace PF_Project_WEB.Controllers
 {
     public class PackagesController : Controller
     {
-        private readonly IApplicationDbContext _context;
+      
+        
+            private readonly IApplicationDbContext _context;
+            private readonly UserManager<Member> _userManager;
+            private readonly SignInManager<Member> _signInManager;
 
-        public PackagesController(IApplicationDbContext context)
-        {
-            _context = context;
-        }
 
-        // GET: Packages
-        public async Task<IActionResult> Index()
+            public PackagesController(IApplicationDbContext context, UserManager<Member> userManager, SignInManager<Member> signInManager)
+            {
+                _context = context;
+                _userManager = userManager;
+                _signInManager = signInManager;
+            }
+
+
+            public IActionResult GetUserId()
+            {
+                var memberId = _userManager.GetUserId(HttpContext.User);
+                return View();
+            }
+
+            // GET: Packages
+            public async Task<IActionResult> Index()
         {
             var applicationDbContext = _context.Packages.Include(p => p.Project);
             return View(await applicationDbContext.ToListAsync());

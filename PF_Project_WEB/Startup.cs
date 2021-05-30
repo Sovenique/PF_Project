@@ -22,11 +22,13 @@ namespace PF_Project_WEB
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-      
+
             services.AddIdentity<Member, IdentityRole>()
+                            .AddClaimsPrincipalFactory<UserClaimsPrincipalFactory<Member, IdentityRole>>()
                             .AddEntityFrameworkStores<ApplicationDbContext>()
-                            .AddDefaultTokenProviders();
-  
+                            .AddDefaultTokenProviders()
+                            .AddDefaultUI();
+                    
             services.AddPersistence(Configuration);
             services.AddCore();
 

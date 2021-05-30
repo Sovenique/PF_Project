@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -17,8 +18,8 @@ namespace PF_Project_CORE
             services.AddScoped<IServiceProject, ServiceProject>();
             services.AddScoped<IServicePackage, ServicePackage>();
             services.AddScoped<IServicePayment, ServicePayment>();
-
-
+            services.AddScoped<IServiceUser,    ServiceUser>();
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             return services;
         }
 
@@ -34,6 +35,8 @@ namespace PF_Project_CORE
 
             services.AddScoped<IApplicationDbContext>(provider => provider.GetService<ApplicationDbContext>());
 
+
+            services.AddTransient<UserManager<Member>>();
             return services;
         }
     }

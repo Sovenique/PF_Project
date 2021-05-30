@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -14,12 +15,23 @@ namespace PF_Project_WEB.Controllers
     public class ProjectsController : Controller
     {
         private readonly IApplicationDbContext _context;
+        private readonly UserManager<Member> _userManager;
+        private readonly SignInManager<Member> _signInManager;
 
-        public ProjectsController(IApplicationDbContext context)
+
+        public ProjectsController(IApplicationDbContext context, UserManager<Member> userManager, SignInManager<Member> signInManager)
         {
             _context = context;
+            _userManager = userManager;
+            _signInManager = signInManager;
         }
 
+     
+        public IActionResult GetUserId()
+        {
+            var memberId = _userManager.GetUserId(HttpContext.User);
+            return View();
+        }
 
 
         // GET: Projects

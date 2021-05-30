@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -10,15 +11,28 @@ namespace PF_Project_WEB.Controllers
 {
     public class PaymentsController : Controller
     {
-        private readonly IApplicationDbContext _context;
+       
+            private readonly IApplicationDbContext _context;
+            private readonly UserManager<Member> _userManager;
+            private readonly SignInManager<Member> _signInManager;
 
-        public PaymentsController(IApplicationDbContext context)
-        {
-            _context = context;
-        }
 
-        // GET: Payments
-        public async Task<IActionResult> Index()
+            public PaymentsController(IApplicationDbContext context, UserManager<Member> userManager, SignInManager<Member> signInManager)
+            {
+                _context = context;
+                _userManager = userManager;
+                _signInManager = signInManager;
+            }
+
+
+            public IActionResult GetUserId()
+            {
+                var memberId = _userManager.GetUserId(HttpContext.User);
+                return View();
+            }
+
+            // GET: Payments
+            public async Task<IActionResult> Index()
         {
             var applicationDbContext = _context.Payments.Include(p => p.Member).Include(p => p.Package);
             return View(await applicationDbContext.ToListAsync());
