@@ -21,12 +21,11 @@ namespace PF_Project_CORE.Services
 
         // CREATE
         // --------------------------------------------------------
-        public OptionProject CreateProject(OptionProject optionProject, OptionMember optionMember)
-        {
+        public OptionProject CreateProject(OptionProject optionProject)
+        {   
             // FIND THE MEMBER CREATOR (BY EMAIL)
-            var claims = ClaimsPrincipal.Current.Identities.First().Claims.ToList();
-            var Id = claims?.FirstOrDefault(x => x.Type.Equals("Id", StringComparison.OrdinalIgnoreCase))?.Value;
-            var member = _dbContext.Members.Where(mem => mem.Id == Id).ToList();
+       
+        
    
             Project project = new()
             {
@@ -35,8 +34,7 @@ namespace PF_Project_CORE.Services
                 CreatedDate = DateTime.Now,
                 AmountGathered = 0,
                 TargetAmount = optionProject.TargetAmount,
-                Creator = member[0],
-                CreatorId = member[0].Id
+                CreatorId = optionProject.CreatorId
             };
 
             _dbContext.Projects.Add(project);

@@ -18,7 +18,12 @@ namespace PF_Project_CORE
             services.AddScoped<IServiceProject, ServiceProject>();
             services.AddScoped<IServicePackage, ServicePackage>();
             services.AddScoped<IServicePayment, ServicePayment>();
-    
+            services.AddIdentity<Member, IdentityRole>()
+                           .AddClaimsPrincipalFactory<UserClaimsPrincipalFactory<Member, IdentityRole>>()
+                           .AddEntityFrameworkStores<ApplicationDbContext>()
+                           .AddDefaultTokenProviders()
+                           .AddDefaultUI();
+
             return services;
         }
 
@@ -30,12 +35,14 @@ namespace PF_Project_CORE
                 options.UseSqlServer(
                     configuration.GetConnectionString("DefaultConnection"),
                     b => b.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName))
-            );
 
+
+            );
+            
             services.AddScoped<IApplicationDbContext>(provider => provider.GetService<ApplicationDbContext>());
 
 
-            services.AddTransient<UserManager<Member>>();
+          
             return services;
         }
     }

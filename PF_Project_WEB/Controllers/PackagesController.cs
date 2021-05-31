@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using PF_Project_CORE.Database;
 using PF_Project_CORE.Entities;
 using PF_Project_CORE.Interfaces;
 
@@ -15,17 +11,11 @@ namespace PF_Project_WEB.Controllers
     public class PackagesController : Controller
     {
       
-        
             private readonly IApplicationDbContext _context;
-            private readonly UserManager<Member> _userManager;
-            private readonly SignInManager<Member> _signInManager;
 
-
-            public PackagesController(IApplicationDbContext context, UserManager<Member> userManager, SignInManager<Member> signInManager)
+            public PackagesController(IApplicationDbContext context)
             {
                 _context = context;
-                _userManager = userManager;
-                _signInManager = signInManager;
             }
 
 

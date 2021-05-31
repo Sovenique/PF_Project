@@ -1,29 +1,38 @@
 ﻿using System;
-using System.Collections.Generic;
+
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using PF_Project_CORE.Database;
+
 using PF_Project_CORE.Entities;
 using PF_Project_CORE.Interfaces;
+using PF_Project_CORE.Options;
+using PF_Project_WEB.Services;
 
 namespace PF_Project_WEB.Controllers
 {
     public class ProjectsController : Controller
     {
+        private readonly ICurrentUserService _currentUserService;
         private readonly IApplicationDbContext _context;
         private readonly UserManager<Member> _userManager;
         private readonly SignInManager<Member> _signInManager;
 
+        private readonly IServiceProject _projectService;
 
-        public ProjectsController(IApplicationDbContext context, UserManager<Member> userManager, SignInManager<Member> signInManager)
+     
+
+        public ProjectsController(ICurrentUserService currentUserService, IApplicationDbContext context, UserManager<Member> userManager,
+            SignInManager<Member> signInManager, IServiceProject projectService)
         {
+            _currentUserService = currentUserService;
             _context = context;
             _userManager = userManager;
             _signInManager = signInManager;
+            _projectService = projectService;
         }
 
 
@@ -72,13 +81,22 @@ namespace PF_Project_WEB.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Projects.Add(project);
-                await _context.SaveChangesAsync();
+
+                _projectService.CreateProject(new OptionProject
+
+                {
+                    Title = project.Title,
+                    Description = project.Description,
+                    CreatedDate = DateTime.Now,
+                    TargetAmount = project.TargetAmount,
+                    CreatorId = _currentUserService.UserId
+                });
+
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CreatorId"] = new SelectList(_context.Members, "Id", "Id", project.CreatorId);
             return View(project);
         }
+    
 
         // GET: Projects/Edit/5
         public async Task<IActionResult> Edit(int? id)
