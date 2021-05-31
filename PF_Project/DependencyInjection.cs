@@ -18,8 +18,7 @@ namespace PF_Project_CORE
             services.AddScoped<IServiceProject, ServiceProject>();
             services.AddScoped<IServicePackage, ServicePackage>();
             services.AddScoped<IServicePayment, ServicePayment>();
-            services.AddScoped<IServiceUser,    ServiceUser>();
-            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+    
             return services;
         }
 

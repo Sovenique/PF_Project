@@ -4,6 +4,7 @@ using PF_Project_CORE.Options;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -23,9 +24,10 @@ namespace PF_Project_CORE.Services
         public OptionProject CreateProject(OptionProject optionProject, OptionMember optionMember)
         {
             // FIND THE MEMBER CREATOR (BY EMAIL)
-            var member = _dbContext.Members.Where(mem => mem.Id == optionMember.Id).ToList();
-
-            // CREATE THE MEMBER OBJECT
+            var claims = ClaimsPrincipal.Current.Identities.First().Claims.ToList();
+            var Id = claims?.FirstOrDefault(x => x.Type.Equals("Id", StringComparison.OrdinalIgnoreCase))?.Value;
+            var member = _dbContext.Members.Where(mem => mem.Id == Id).ToList();
+   
             Project project = new()
             {
                 Title = optionProject.Title,
