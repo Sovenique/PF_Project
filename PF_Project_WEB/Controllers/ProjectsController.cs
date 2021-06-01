@@ -1,12 +1,10 @@
 ﻿using System;
-
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-
 using PF_Project_CORE.Entities;
 using PF_Project_CORE.Interfaces;
 using PF_Project_CORE.Options;
@@ -18,25 +16,17 @@ namespace PF_Project_WEB.Controllers
     {
         private readonly ICurrentUserService _currentUserService;
         private readonly IApplicationDbContext _context;
-        private readonly UserManager<Member> _userManager;
-        private readonly SignInManager<Member> _signInManager;
-
         private readonly IServiceProject _projectService;
 
      
-
-        public ProjectsController(ICurrentUserService currentUserService, IApplicationDbContext context, UserManager<Member> userManager,
-            SignInManager<Member> signInManager, IServiceProject projectService)
+        public ProjectsController(ICurrentUserService currentUserService, 
+            IApplicationDbContext context,
+            IServiceProject projectService)
         {
             _currentUserService = currentUserService;
             _context = context;
-            _userManager = userManager;
-            _signInManager = signInManager;
             _projectService = projectService;
         }
-
-
-        // USARE AUTO GIA ID _userManager.GetUserId(HttpContext.User);
 
 
         // GET: Projects
@@ -46,7 +36,7 @@ namespace PF_Project_WEB.Controllers
             return View(await applicationDbContext.ToListAsync());
         }
 
-        // GET: Projects/Details/5
+        // GET: Details
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -68,13 +58,12 @@ namespace PF_Project_WEB.Controllers
         // GET: Projects/Create
         public IActionResult Create()
         {
-            ViewData["CreatorId"] = new SelectList(_context.Members, "Id", "Id");
+            ViewData["CreatorId"] = _currentUserService.UserId;
             return View();
         }
 
-        // POST: Projects/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // POST: Create
+       
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Title,Description,CreatedDate,AmountGathered,TargetAmount,CreatorId")] Project project)

@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 
 namespace PF_Project_CORE.Interfaces
 {
-    interface IServiceMember
+    public interface IServiceMember
     {
         // CREATE
         public OptionMember CreateMember(OptionMember optionMember);
         // READ
         public List<OptionMember> GetAllMembers();
-        public OptionMember GetMemberById(int Id);
+        public OptionMember GetMemberById(string Id);
         // UPDATE
         public OptionMember UpdateMember(OptionMember optionMember, int Id);
         // DELETE

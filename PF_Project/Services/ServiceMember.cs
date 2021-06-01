@@ -67,7 +67,7 @@ namespace PF_Project_CORE.Services
 
         // READ / BY ID
         // --------------------------------------------------------
-        public OptionMember GetMemberById(int Id)
+        public OptionMember GetMemberById(string Id)
         {
             Member member = _dbContext.Members.Find(Id);
             if (member == null)

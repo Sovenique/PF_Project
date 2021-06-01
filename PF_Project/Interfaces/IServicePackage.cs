@@ -10,7 +10,7 @@ namespace PF_Project_CORE.Interfaces
     public interface IServicePackage
     {
         // CREATE
-        public OptionPackage CreatePackage(OptionPackage optionPackage,OptionProject optionProject);
+        public OptionPackage CreatePackage(OptionPackage optionPackage);
         // READ ALL
         public List<OptionPackage> GetAllPackages();
         // READ BY ID

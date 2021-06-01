@@ -23,10 +23,8 @@ namespace PF_Project_CORE.Services
         // --------------------------------------------------------
         public OptionProject CreateProject(OptionProject optionProject)
         {   
-            // FIND THE MEMBER CREATOR (BY EMAIL)
-       
         
-   
+
             Project project = new()
             {
                 Title = optionProject.Title,

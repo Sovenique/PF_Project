@@ -20,17 +20,16 @@ namespace PF_Project_CORE.Services
 
         // CREATE
         // --------------------------------------------------------
-        public OptionPackage CreatePackage(OptionPackage optionPackage,OptionProject optionProject)
+        public OptionPackage CreatePackage(OptionPackage optionPackage)
         {
-            // FIND THE CORRESPONDING PROJECT
-            var project = _dbContext.Projects.Where(pro => pro.Id == optionProject.Id).ToList();
+        
 
             Package package = new()
             {
                 Title = optionPackage.Title,
                 Description = optionPackage.Description,
                 Value = optionPackage.Value,
-                Project = project[0]
+    
 
             };
 
