@@ -15,6 +15,7 @@ namespace PF_Project_CORE.Entities
         public decimal AmountGathered { get; set; }
         public decimal TargetAmount { get; set; }
 
+
         // <Foreign Key> : Link to <Member> entity
         public Member Creator { get; set; }
         public string CreatorId { get; set; }

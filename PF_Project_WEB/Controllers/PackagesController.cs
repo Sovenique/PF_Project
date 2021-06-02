@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -15,20 +16,20 @@ namespace PF_Project_WEB.Controllers
 
         private readonly ICurrentUserService _currentUserService;
         private readonly IApplicationDbContext _context;
-        private readonly IServicePackage _projectPackage;
-        private readonly IServiceMember _serviceMember;
+        private readonly IServicePackage _servicePackage;
+        private readonly IServiceProject _serviceProject;
       
        
         public PackagesController(ICurrentUserService currentUserService,
                   IApplicationDbContext context,
-                  IServicePackage projectPackage,
-                  IServiceMember serviceMember)
+                  IServicePackage servicePackage,
+                  IServiceProject serviceProject)
         
         {
             _currentUserService = currentUserService;
             _context = context;
-            _projectPackage = projectPackage;
-            _serviceMember = serviceMember;
+            _servicePackage = servicePackage;
+            _serviceProject = serviceProject;
         }
 
 
@@ -61,7 +62,10 @@ namespace PF_Project_WEB.Controllers
 
         public IActionResult Create()
         {
-            ViewData["ProjectId"] = new SelectList(_context.Projects, "Id", "Id");
+            var Id = _currentUserService.UserId;
+            var projects = _serviceProject.GetAllProjects();
+            var currentProjects = projects.Where(x => x.CreatorId == Id).ToList();
+            ViewBag.ProjectId = new SelectList(currentProjects, "Id", "Id");
             return View();
         }
 
@@ -71,20 +75,21 @@ namespace PF_Project_WEB.Controllers
         public async Task<IActionResult> Create([Bind("Id,Title,Description,Value,ProjectId")] Package package)
         {
             var Id = _currentUserService.UserId;
-            var member = _serviceMember.GetMemberById(Id);
-    
-            
+            var projects = _serviceProject.GetAllProjects();
+            var currentProjects = projects.Where(x => x.CreatorId == Id).ToList();
+
+            ViewBag.ProjectId = new SelectList(currentProjects, "Id", "Id", package.Id);
+
             if (ModelState.IsValid)
             {
-                _projectPackage.CreatePackage(new OptionPackage
+                _servicePackage.CreatePackage(new OptionPackage
                 {
                     Title = package.Title,
                     Description = package.Description,
-                    Value = package.Value
-                  
+                    Value = package.Value,
+                    ProjectId = package.ProjectId
                 });
             }
-            ViewData["ProjectId"] = new SelectList(member.Projects, "Id", "Id", package.ProjectId);
             return View(package);
         }
 

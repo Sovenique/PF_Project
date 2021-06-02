@@ -29,7 +29,7 @@ namespace PF_Project_CORE.Services
                 Title = optionPackage.Title,
                 Description = optionPackage.Description,
                 Value = optionPackage.Value,
-    
+                ProjectId = optionPackage.ProjectId
 
             };
 

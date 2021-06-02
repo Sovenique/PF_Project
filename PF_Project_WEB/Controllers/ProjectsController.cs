@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -17,15 +16,16 @@ namespace PF_Project_WEB.Controllers
         private readonly ICurrentUserService _currentUserService;
         private readonly IApplicationDbContext _context;
         private readonly IServiceProject _projectService;
-
-     
+    
         public ProjectsController(ICurrentUserService currentUserService, 
             IApplicationDbContext context,
             IServiceProject projectService)
+           
         {
             _currentUserService = currentUserService;
             _context = context;
             _projectService = projectService;
+  
         }
 
 
@@ -174,5 +174,7 @@ namespace PF_Project_WEB.Controllers
         {
             return _context.Projects.Any(e => e.Id == id);
         }
+
+      
     }
 }

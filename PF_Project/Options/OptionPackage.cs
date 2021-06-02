@@ -15,7 +15,7 @@ namespace PF_Project_CORE.Options
         public decimal Value { get; set; }
         public Project Project { get; set; }
         public int ProjectId { get; set; }
-
+        
         public OptionPackage() { }
         public OptionPackage(Package package )
         {
